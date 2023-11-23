@@ -4,9 +4,10 @@ const path = require('path');
 const router = express.Router();
 const fs = require('fs');
 const {exec, spawn} = require('child_process');
+const config = require('./config.json');
 
-const PORT = 80;
-const MUTESTART = 1500;
+const PORT = config.PORT;
+const MUTESTART = config.MUTE_START;
 
 function subTerminal(json) {
 	var state = json["state"];
