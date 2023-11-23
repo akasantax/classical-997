@@ -1,4 +1,5 @@
 pulseaudio -D
+sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080
 cd /home/joey/classical-997/
 rm console.log
 sleep 5
