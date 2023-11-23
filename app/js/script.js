@@ -24,7 +24,7 @@ function playStop() {
 
 	var xhr = new XMLHttpRequest();
 	var method = 'POST';
-	var url = '/';
+	var url = '/player/control';
 	xhr.open(method, url, true);
 	xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	xhr.onreadystatechange = function() {
@@ -41,7 +41,7 @@ function load() {
 	// get media source
 	var xhr = new XMLHttpRequest();
 	var method = 'GET';
-	url = '/data/media-source.json';
+	url = '/player/playlist';
 	xhr.open(method, url, true);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4 && xhr.status === 200) {
@@ -72,7 +72,7 @@ function loadPlayerData() {
 	var currentTrack = document.getElementById('currentTrack');
 	var xhr = new XMLHttpRequest()
 	var method = 'GET',
-		url = '/data/player-state.json';
+		url = '/player/state';
 	xhr.open(method, url, true);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4 && xhr.status == 200) {
@@ -103,7 +103,7 @@ function getServerData() {
 	var currentTrack = document.getElementById('currentTrack');
 	var xhr = new XMLHttpRequest()
 	var method = 'GET',
-		url = '/data/player-state.json';
+		url = '/player/state';
 	xhr.open(method, url, true);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4 && xhr.status === 200) {
@@ -129,7 +129,7 @@ function trackSelect(option) {
 		data = JSON.stringify(data)
 		var xhr = new XMLHttpRequest();
 		var method = 'POST';
-		var url = '/';
+		var url = '/player/control';
 		xhr.open(method, url, true);
 		xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xhr.onreadystatechange = function() {

@@ -67,8 +67,7 @@ if __name__ == "__main__":
     media_source = dict(zip(catagory, urls))
 
     generate_xml(media_source)
-    d = [{'id':key, 'title':TITLE[key], 'link':value} for key,value in media_source.items()]
+    d = [{'id':key, 'title':TITLE[key]} for key,value in media_source.items()]
     json_data = json.dumps(d)
-    # json_data = re.sub(r'(?<!: )"(\S*?)"', '\\1', json_data)
-    with open("./app/data/media-source.json", "w") as outfile:
+    with open("./playlist.json", "w") as outfile:
         outfile.write(json_data)
