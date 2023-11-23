@@ -5,7 +5,8 @@ const router = express.Router();
 const fs = require('fs');
 const {exec, spawn} = require('child_process');
 
-const muteStart = 1500;
+const PORT = 80;
+const MUTESTART = 1500;
 
 function subTerminal(json) {
 	var state = json["state"];
@@ -30,7 +31,7 @@ function subTerminal(json) {
 		// added delay for vlc to buffer audio stream
 		setTimeout(function() {
 			unmute();
-		}, muteStart);
+		}, MUTESTART);
 
 	}, 100);
 	
@@ -124,8 +125,7 @@ else{
 
 exec('killall vlc');
 
-//add the router
 app.use('/', router);
-app.listen(process.env.port || 8080);
+app.listen(process.env.port || PORT);
 
-console.log('Running at Port 8080');
+console.log(`Running at Port ${PORT}`);
