@@ -70,5 +70,5 @@ if __name__ == "__main__":
     d = [{'id':key, 'title':TITLE[key], 'link':value} for key,value in media_source.items()]
     json_data = json.dumps(d)
     # json_data = re.sub(r'(?<!: )"(\S*?)"', '\\1', json_data)
-    with open("./web/data/media-source.json", "w") as outfile:
+    with open("./app/data/media-source.json", "w") as outfile:
         outfile.write(json_data)
