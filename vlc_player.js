@@ -1,7 +1,7 @@
 const {execSync, spawn} = require('child_process');
 const config = require('./config.json');
 
-const NETWORK_CACHING = config.MUTE_START;
+const NETWORK_CACHING = config.NETWORK_CACHING;
 
 function mute() {
 	try { execSync('amixer -D pulse set Master mute'); } catch (error) {}
