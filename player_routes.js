@@ -2,7 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const router = express.Router();
-const {vlcPlayer} = require('./vlcPlayer.js');
+const {vlcPlayer} = require('./vlc_player.js');
 
 router.get('/playlist', function(req, res) {
 	res.sendFile(path.join(__dirname + '/playlist.json'));

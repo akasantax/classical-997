@@ -3,8 +3,8 @@ const app = express();
 const fs = require('fs');
 const {execSync} = require('child_process');
 const config = require('./config.json');
-const player = require('./playerRoutes.js');
-const {vlcPlayer} = require('./vlcPlayer.js');
+const player = require('./player_routes.js');
+const {vlcPlayer} = require('./vlc_player.js');
 
 const PORT = config.PORT;
 const args = process.argv.slice(2);
