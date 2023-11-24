@@ -23,7 +23,7 @@ if (args.includes('debug')) {
 if (args.includes('autoplay')) {
 	const playlist = JSON.parse(fs.readFileSync('./playlist.json'));
 	let track = playlist[0].id;
-	let data = `{"state":"play","track":"${track}"}`
+	let data = `{"state":"play","track":"${track}"}`;
 	let jsonData = JSON.parse(data);
 	console.log("[autoplay]");
 	console.log(jsonData);
