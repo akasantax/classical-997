@@ -24,7 +24,7 @@ body {
     justify-content: center;
 }
 
-.dropbtn {
+.dropBtn {
   font-family: "ABeeZee";
   background-color: rgb(143, 143, 143);
   color: white;
@@ -70,7 +70,7 @@ body {
   display: block;
 }
 
-.dropdown:hover .dropbtn {
+.dropdown:hover .dropBtn {
   background-color: rgb(110, 110, 110);
 }
 
