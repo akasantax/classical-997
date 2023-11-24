@@ -4,6 +4,8 @@ function load() {
 		document.getElementById('dropBtn').removeAttribute('onmouseover');
 	}
 
+	establishSocketConnection();
+
 	const url = '/player/playlist';
 	fetch(url)
 		.then(response => {
@@ -23,32 +25,18 @@ function load() {
 					'<a href="javascript:void(0);" id="' + track[i].id + '" onclick="trackSelect(this)">' + track[i].title + '</a>';
 			}
 		})
+		.then(() =>	{
+			getServerData();
+		})
 		.catch(error => {
 		  console.error('error:', error.message);
 		});
-
-	getServerData(updatePlayer=true);
 
 	// add margin left to center play button
 	const btn = document.getElementById('playBtn');
 	const btnOffsetWidth = btn.offsetWidth;
 	const leftWidth = getComputedStyle(document.getElementById('playBtn'), null).getPropertyValue('border-left-width');
 	btn.style.marginLeft = (btnOffsetWidth - parseInt(leftWidth)) + "px";
-
-	const host = window.location.host;  
-	const websocketUrl = `ws://${host}:4040`;
-	let ws = new WebSocket(websocketUrl);
-	ws.onopen = () => {
-		console.log('open connection');
-	}
-	ws.onclose = () => {
-		console.log('close connection');
-	}
-	
-    ws.onmessage = () => {
-		console.log("new message");
-		getServerData(updatePlayer=true);
-	}
 }
 
 function mobileAndTabletcheck() {
@@ -67,20 +55,53 @@ function isIpadOS() {
 	return check;
 };
 
-function setPlaybutton() {
-	const currentState = document.getElementById('currentState').innerHTML;
+function establishSocketConnection() {
+	const host = window.location.hostname;  
+	const websocketUrl = `ws://${host}:4040`;
+	const socket = new WebSocket(websocketUrl);
+
+    socket.addEventListener('open', (event) => {
+		console.log('socket connection opened');
+	});
+  
+	socket.addEventListener('message', (event) => {
+		const data = JSON.parse(event.data);
+		update(data);
+	});
+
+	socket.addEventListener('close', (event) => {
+		console.log('socket connection closed');
+	});
+}
+
+function update(data) {
+	document.getElementById('currentState').innerHTML = data["state"];
+	document.getElementById('currentTrack').innerHTML = data["track"];
 	const btn = document.getElementById('playBtn');
+	// update play paulse button
+	if (data["state"] == "stop") {
+		btn.classList.remove("stop");
+	} else {
+		btn.classList.add("stop");
+	}
+	// update track
+	if (data["track"] !== "") {
+		document.getElementById('dropBtn').innerHTML = document.getElementById(data["track"]).innerHTML;
+		document.getElementById('dropBtn').value = data["track"];
+	}
+}
+
+function setNewState() {
+	const currentState = document.getElementById('currentState').innerHTML;
 	if (currentState == "stop") {
 		newState = "play";
-		btn.classList.add("stop");
 	} else {
 		newState = "stop"
-		btn.classList.remove("stop");
 	}
 	return newState;
 }
 
-function getServerData(updatePlayer=false) {
+function getServerData() {
 	const url = '/player/state';
 	fetch(url)
 		.then(response => {
@@ -90,21 +111,7 @@ function getServerData(updatePlayer=false) {
 			return response.json();
 		})
 		.then(data => {
-			document.getElementById('currentState').innerHTML = data["state"];
-			document.getElementById('currentTrack').innerHTML = data["track"];
-			if (updatePlayer == true) {
-				// play paulse button
-				const btn = document.getElementById('playBtn');
-				if (data["state"] == "stop") {
-					btn.classList.remove("stop");
-				} else {
-					btn.classList.add("stop");
-				}
-				// track selection
-				if (data["track"] !== "") {
-					document.getElementById('dropBtn').innerHTML = document.getElementById(data["track"]).innerHTML;
-				}
-			}
+			update(data);
 		})
 		.catch(error => {
 		  console.error('error:', error.message);
@@ -113,7 +120,7 @@ function getServerData(updatePlayer=false) {
 
 function togglePlay() {
 	const currentTrack = document.getElementById('dropBtn').value;
-	const newState = setPlaybutton();
+	const newState = setNewState();
 	const url = '/player/control';
 	const data = {
 		state: newState,
