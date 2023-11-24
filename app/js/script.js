@@ -1,4 +1,3 @@
-
 function load() {
 	if(mobileAndTabletcheck()||isIpadOS()){
 		document.getElementById('dropBtn').removeAttribute('onmouseover');
