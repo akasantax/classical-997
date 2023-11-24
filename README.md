@@ -1,7 +1,7 @@
 <h1>Installation</h1>
 
 ```diff
-#install nodejs
+# install nodejs
 sudo apt install nodejs
 sudo apt install npm
 
