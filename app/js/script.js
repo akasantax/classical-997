@@ -63,8 +63,7 @@ function load() {
 		  console.error('error:', error.message);
 		});
 
-	// get player data from server
-	loadPlayerData();
+	getServerData(initPlayer=true);
 
 	// add margin left to center play button
 	const btn = document.getElementById('playBtn');
@@ -73,36 +72,7 @@ function load() {
 	btn.style.marginLeft = (btnOffsetWidth - parseInt(leftWidth)) + "px";
 }
 
-function loadPlayerData() {
-	const url = '/player/state';
-	fetch(url)
-		.then(response => {
-		  if(!response.ok) {
-				throw new Error(`requeset failed with status: ${response.status}`);
-		  }
-		  return response.json();
-		})
-		.then(data => {
-			document.getElementById('currentState').innerHTML = data["state"];
-			document.getElementById('currentTrack').innerHTML = data["track"];
-			// play paulse button
-			const btn = document.getElementById('playBtn');
-			if (data["state"] == "stop") {
-				btn.classList.remove("stop");
-			} else {
-				btn.classList.add("stop");
-			}
-			// track selection
-			if (data["track"] !== "") {
-				document.getElementById('dropBtn').innerHTML = document.getElementById(data["track"]).innerHTML;
-			}
-		})
-		.catch(error => {
-		  console.error('error:', error.message);
-		});
-}
-
-function getServerData() {
+function getServerData(initPlayer=false) {
 	const url = '/player/state';
 	fetch(url)
 		.then(response => {
@@ -114,6 +84,19 @@ function getServerData() {
 		.then(data => {
 			document.getElementById('currentState').innerHTML = data["state"];
 			document.getElementById('currentTrack').innerHTML = data["track"];
+			if (initPlayer == true) {
+				// play paulse button
+				const btn = document.getElementById('playBtn');
+				if (data["state"] == "stop") {
+					btn.classList.remove("stop");
+				} else {
+					btn.classList.add("stop");
+				}
+				// track selection
+				if (data["track"] !== "") {
+					document.getElementById('dropBtn').innerHTML = document.getElementById(data["track"]).innerHTML;
+				}
+			}
 		})
 		.catch(error => {
 		  console.error('error:', error.message);
