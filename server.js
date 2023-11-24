@@ -29,7 +29,7 @@ if (args.includes('autoplay')) {
 	console.log(jsonData);
 	fs.writeFileSync('./player-state.json', data);
 	vlcPlayer(jsonData);
-} else{
+} else {
 	try { execSync('killall vlc'); } catch (error) {}
 	let data = '{"state":"stop","track":""}';
 	fs.writeFileSync('./player-state.json', data);
