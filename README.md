@@ -23,7 +23,7 @@ chmod +x map_port.sh
 
 # run script on startup as root
 sudo crontab -e
-@reboot /home/pi/classical-997/map_port.sh
+@reboot /home/{user}/classical-997/map_port.sh
 
 # run script on startup as user
 crontab -e
