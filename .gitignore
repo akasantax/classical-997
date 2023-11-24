@@ -1,3 +1,5 @@
 node_modules
 playlist
 console.log
+player-state.json
+playlist.json
