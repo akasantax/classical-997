@@ -48,9 +48,10 @@ function load() {
 		  }
 		  return response.json();
 		})
-		.then(track => {
+		.then(data => {
 			const dropBtn = document.getElementById('dropBtn');
 			const element = document.getElementById('dropdown-content');
+			const track = data;
 			dropBtn.innerHTML = track[0].title;
 			dropBtn.value = track[0].id;
 			for (let i = 0; i < track.length; i++) {
