@@ -1,7 +1,6 @@
 pulseaudio -k
 sleep 1
 pulseaudio -D
-sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 4040
 cd ~/classical-997/
 rm console.log
 sleep 5
