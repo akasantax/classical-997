@@ -158,7 +158,7 @@ function hide() {
 
 function mobileAndTabletcheck() {
 	let check = false;
-	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 		check = true;
 	}
 	return check;
@@ -166,7 +166,7 @@ function mobileAndTabletcheck() {
 
 function isIpadOS() {
 	let check = false;
-	if(navigator.userAgent.match(/Intel Mac OS X/) && navigator.maxTouchPoints && navigator.maxTouchPoints > 2){
+	if(navigator.userAgent.match(/Intel Mac OS X/) && navigator.maxTouchPoints && navigator.maxTouchPoints > 2) {
 		check = true;
 	}
 	return check;
