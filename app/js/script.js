@@ -1,43 +1,3 @@
-function setPlaybutton() {
-	const currentState = document.getElementById('currentState').innerHTML;
-	const btn = document.getElementById('playBtn');
-	if (currentState == "stop") {
-		newState = "play";
-		btn.classList.add("stop");
-	} else {
-		newState = "stop"
-		btn.classList.remove("stop");
-	}
-	return newState;
-}
-
-function playStop() {
-	const currentTrack = document.getElementById('dropBtn').value;
-	const newState = setPlaybutton();
-	const url = '/player/control';
-	const data = {
-		state: newState,
-		track: currentTrack
-	};
-	const jsonString = JSON.stringify(data);
-	fetch(url, {
-		method: 'POST',
-		headers: {'Content-Type': 'application/json;charset=UTF-8'},
-		body: jsonString
-	})
-		.then(response => {
-		  if(!response.ok) {
-			throw new Error(`requeset failed with status: ${response.status}`);
-		  }
-		  return response.json();
-		})
-		.then(data => {
-		  getServerData();
-		})
-		.catch(error => {
-		  console.error('error:', error.message);
-		});
-}
 
 function load() {
 	if(mobileAndTabletcheck()||isIpadOS()){
@@ -76,6 +36,35 @@ function load() {
 	btn.style.marginLeft = (btnOffsetWidth - parseInt(leftWidth)) + "px";
 }
 
+function mobileAndTabletcheck() {
+	let check = false;
+	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+		check = true;
+	}
+	return check;
+};
+
+function isIpadOS() {
+	let check = false;
+	if(navigator.userAgent.match(/Intel Mac OS X/) && navigator.maxTouchPoints && navigator.maxTouchPoints > 2) {
+		check = true;
+	}
+	return check;
+};
+
+function setPlaybutton() {
+	const currentState = document.getElementById('currentState').innerHTML;
+	const btn = document.getElementById('playBtn');
+	if (currentState == "stop") {
+		newState = "play";
+		btn.classList.add("stop");
+	} else {
+		newState = "stop"
+		btn.classList.remove("stop");
+	}
+	return newState;
+}
+
 function getServerData(initPlayer=false) {
 	const url = '/player/state';
 	fetch(url)
@@ -101,6 +90,34 @@ function getServerData(initPlayer=false) {
 					document.getElementById('dropBtn').innerHTML = document.getElementById(data["track"]).innerHTML;
 				}
 			}
+		})
+		.catch(error => {
+		  console.error('error:', error.message);
+		});
+}
+
+function togglePlay() {
+	const currentTrack = document.getElementById('dropBtn').value;
+	const newState = setPlaybutton();
+	const url = '/player/control';
+	const data = {
+		state: newState,
+		track: currentTrack
+	};
+	const jsonString = JSON.stringify(data);
+	fetch(url, {
+		method: 'POST',
+		headers: {'Content-Type': 'application/json;charset=UTF-8'},
+		body: jsonString
+	})
+		.then(response => {
+		  if(!response.ok) {
+			throw new Error(`requeset failed with status: ${response.status}`);
+		  }
+		  return response.json();
+		})
+		.then(data => {
+		  getServerData();
 		})
 		.catch(error => {
 		  console.error('error:', error.message);
@@ -155,19 +172,3 @@ function hide() {
 		dropdownContent.classList.add("hidden");
 	}
 }
-
-function mobileAndTabletcheck() {
-	let check = false;
-	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-		check = true;
-	}
-	return check;
-};
-
-function isIpadOS() {
-	let check = false;
-	if(navigator.userAgent.match(/Intel Mac OS X/) && navigator.maxTouchPoints && navigator.maxTouchPoints > 2) {
-		check = true;
-	}
-	return check;
-};
