@@ -40,6 +40,10 @@ function playStop() {
 }
 
 function load() {
+	if(mobileAndTabletcheck()||isIpadOS()){
+		document.getElementById('dropBtn').removeAttribute('onmouseover');
+	}
+
 	const url = '/player/playlist';
 	fetch(url)
 		.then(response => {
@@ -151,3 +155,19 @@ function hide() {
 		dropdownContent.classList.add("hidden");
 	}
 }
+
+function mobileAndTabletcheck() {
+	let check = false;
+	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+		check = true;
+	}
+	return check;
+};
+
+function isIpadOS() {
+	let check = false;
+	if(navigator.userAgent.match(/Intel Mac OS X/) && navigator.maxTouchPoints && navigator.maxTouchPoints > 2){
+		check = true;
+	}
+	return check;
+};
