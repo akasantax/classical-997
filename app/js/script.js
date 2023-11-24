@@ -148,14 +148,14 @@ function togglePlay() {
 
 function trackSelect(option) {
 	const currentState = document.getElementById('currentState').innerHTML;
-	const currentTrack = option.id;
-	document.getElementById('dropBtn').value = currentTrack;
+	const newTrack = option.id;
+	document.getElementById('dropBtn').value = newTrack;
 	document.getElementById('dropBtn').innerHTML = option.innerHTML;
 	if (currentState == "play") {
 		const url = '/player/control';
 		const data = {
 			state: "play",
-			track: currentTrack
+			track: newTrack
 		};
 		const jsonString = JSON.stringify(data)
 		fetch(url, {
