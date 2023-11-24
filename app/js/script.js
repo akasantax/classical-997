@@ -27,13 +27,28 @@ function load() {
 		  console.error('error:', error.message);
 		});
 
-	getServerData(initPlayer=true);
+	getServerData(updatePlayer=true);
 
 	// add margin left to center play button
 	const btn = document.getElementById('playBtn');
 	const btnOffsetWidth = btn.offsetWidth;
 	const leftWidth = getComputedStyle(document.getElementById('playBtn'), null).getPropertyValue('border-left-width');
 	btn.style.marginLeft = (btnOffsetWidth - parseInt(leftWidth)) + "px";
+
+	const host = window.location.host;  
+	const websocketUrl = `ws://${host}:4040`;
+	let ws = new WebSocket(websocketUrl);
+	ws.onopen = () => {
+		console.log('open connection');
+	}
+	ws.onclose = () => {
+		console.log('close connection');
+	}
+	
+    ws.onmessage = () => {
+		console.log("new message");
+		getServerData(updatePlayer=true);
+	}
 }
 
 function mobileAndTabletcheck() {
@@ -65,7 +80,7 @@ function setPlaybutton() {
 	return newState;
 }
 
-function getServerData(initPlayer=false) {
+function getServerData(updatePlayer=false) {
 	const url = '/player/state';
 	fetch(url)
 		.then(response => {
@@ -77,7 +92,7 @@ function getServerData(initPlayer=false) {
 		.then(data => {
 			document.getElementById('currentState').innerHTML = data["state"];
 			document.getElementById('currentTrack').innerHTML = data["track"];
-			if (initPlayer == true) {
+			if (updatePlayer == true) {
 				// play paulse button
 				const btn = document.getElementById('playBtn');
 				if (data["state"] == "stop") {
