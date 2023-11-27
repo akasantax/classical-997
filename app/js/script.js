@@ -25,7 +25,7 @@ function load() {
 			}
 		})
 		.then(() =>	{
-			getServerData();
+			getPlayerState();
 		})
 		.catch(error => {
 		  console.error('error:', error.message);
@@ -100,7 +100,7 @@ function setNewState() {
 	return newState;
 }
 
-function getServerData() {
+function getPlayerState() {
 	const url = '/player/state';
 	fetch(url)
 		.then(response => {
@@ -138,7 +138,7 @@ function togglePlay() {
 		  return response.json();
 		})
 		.then(data => {
-		  getServerData();
+		  getPlayerState();
 		})
 		.catch(error => {
 		  console.error('error:', error.message);
@@ -169,7 +169,7 @@ function trackSelect(option) {
 				return response.json();
 			})
 			.then(data => {
-				getServerData();
+				getPlayerState();
 			})
 			.catch(error => {
 				console.error('error:', error.message);
