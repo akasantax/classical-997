@@ -27,10 +27,8 @@ router.post('/control', function(req, res) {
 
 	req.on('end', function() {
 		res.end(data);
-		let clients = wss.clients
-		clients.forEach(client => {
-			client.send(data)
-		})
+		let clients = wss.clients;
+		clients.forEach(client => {client.send(data)});
 		console.log("----------------------------------------------------------------------------");
 		console.log(data);
 		fs.writeFileSync('./player-state.json', data);

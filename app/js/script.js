@@ -156,7 +156,7 @@ function trackSelect(option) {
 			state: "play",
 			track: newTrack
 		};
-		const jsonString = JSON.stringify(data)
+		const jsonString = JSON.stringify(data);
 		fetch(url, {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json;charset=UTF-8'},
@@ -187,7 +187,7 @@ function reveal() {
 function hide() {
 	const dropdownContent = document.getElementById('dropdown-content');
 	if (dropdownContent.classList.contains("hidden")) {
-		reveal()
+		reveal();
 	} else {
 		dropdownContent.classList.remove("dropdown-content");
 		dropdownContent.classList.add("hidden");
