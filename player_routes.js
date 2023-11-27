@@ -37,5 +37,4 @@ router.post('/control', function(req, res) {
 	});
 });
 
-
 module.exports = router;
