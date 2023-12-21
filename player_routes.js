@@ -8,7 +8,10 @@ const {vlcPlayer} = require('./vlc_player.js');
 
 const WEBSOCKET_PORT = config.WEBSOCKET_PORT;
 
-const wss = new WebSocket.Server({ port:WEBSOCKET_PORT });
+const wss = new WebSocket.Server({
+	host: '0.0.0.0',
+	port: WEBSOCKET_PORT 
+});
 
 router.get('/playlist', function(req, res) {
 	res.sendFile(path.join(__dirname + '/playlist.json'));

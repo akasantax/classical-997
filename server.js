@@ -38,6 +38,6 @@ if (args.includes('autoplay')) {
 app.use(express.static('app'));
 app.use('/player', player);
 
-app.listen(process.env.port || PORT);
+app.listen(PORT, '0.0.0.0');
 
 console.log(`Running at Port ${PORT}`);
