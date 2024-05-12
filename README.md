@@ -34,3 +34,13 @@ sudo crontab -e
 crontab -e
 @reboot ~/classical-997/start_server.sh
 ```
+
+<h1>Additional Settings</h1>
+
+```diff
+# change bit depth and smaple rate
+sudo nano /etc/pulse/daemon.conf
+default-sample-format = s24le
+default-sample-rate = 192000
+alternate-sample-rate = 96000
+```
