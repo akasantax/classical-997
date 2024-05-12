@@ -21,6 +21,11 @@ npm install
 chmod +x start_server.sh
 chmod +x map_port.sh
 
+# disable built-in sound card
+cd /etc/modprobe.d
+sudo nano alsa-blacklist.conf
+blacklist snd_bcm2835
+
 # run script on startup as root
 sudo crontab -e
 @reboot /home/{user}/classical-997/map_port.sh
