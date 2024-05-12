@@ -39,6 +39,7 @@ blacklist snd_bcm2835
 
 # change bit depth and smaple rate
 sudo nano /etc/pulse/daemon.conf
+avoid-resampling = yes
 default-sample-format = s24le
 default-sample-rate = 192000
 alternate-sample-rate = 96000
