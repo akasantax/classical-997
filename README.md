@@ -21,11 +21,6 @@ npm install
 chmod +x start_server.sh
 chmod +x map_port.sh
 
-# disable built-in sound card
-cd /etc/modprobe.d
-sudo nano alsa-blacklist.conf
-blacklist snd_bcm2835
-
 # run script on startup as root
 sudo crontab -e
 @reboot /home/{user}/classical-997/map_port.sh
@@ -35,9 +30,13 @@ crontab -e
 @reboot ~/classical-997/start_server.sh
 ```
 
-<h1>Additional Settings</h1>
+<h1>Audio Settings</h1>
 
 ```diff
+# disable built-in sound card
+sudo nano /etc/modprobe.d/alsa-blacklist.conf
+blacklist snd_bcm2835
+
 # change bit depth and smaple rate
 sudo nano /etc/pulse/daemon.conf
 default-sample-format = s24le
