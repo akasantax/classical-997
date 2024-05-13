@@ -7,6 +7,9 @@ sudo apt install npm
 
 # install vlc player
 sudo apt install vlc
+
+# install iptables
+sudo apt install iptables
 ```
 
 <h1>Instruction</h1>
